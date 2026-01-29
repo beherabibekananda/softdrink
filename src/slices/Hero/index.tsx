@@ -134,11 +134,12 @@ const Hero = ({ slice }: HeroProps): JSX.Element => {
               Empowering stressed students and professionals to enhance performance and productivity.
             </div>
 
-            <Button
-              buttonLink={{ url: "#menu" }}
-              buttonText="Experience REBELIVE"
-              className="hero-button mt-12"
-            />
+            <a
+              href="#menu"
+              className="hero-button mt-12 inline-block rounded-xl bg-white px-8 py-4 text-center text-xl font-bold uppercase tracking-wide text-black transition-colors duration-150 hover:bg-slate-100 md:text-2xl"
+            >
+              Experience REBELIVE
+            </a>
           </div>
         </div>
         <div className="text-side relative z-[80] grid h-screen items-center gap-4 md:grid-cols-2">
