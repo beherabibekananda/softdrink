@@ -4,7 +4,7 @@ import { Bounded } from "@/components/Bounded";
 import { Content } from "@prismicio/client";
 import { SliceComponentProps } from "@prismicio/react";
 import Scene from "./Scene";
-import {View } from "@react-three/drei";
+import { View } from "@react-three/drei";
 
 /**
  * Props for `SkyDive`.
@@ -22,9 +22,9 @@ const SkyDive = ({ slice }: SkyDiveProps): JSX.Element => {
       className="skydive h-screen"
     >
       <View className="h-screen w-screen">
-        <Scene flavor={slice.primary.flavor} sentence={slice.primary.sentence}/>
+        <Scene flavor={slice.primary.flavor} sentence="REBELIVE APEX ENERGY" />
       </View>
-      <h2 className="sr-only">{slice.primary.sentence}</h2>
+      <h2 className="sr-only">REBELIVE APEX ENERGY</h2>
     </Bounded>
   );
 };

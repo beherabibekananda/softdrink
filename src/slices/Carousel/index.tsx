@@ -20,16 +20,12 @@ const FLAVORS: {
   color: string;
   name: string;
 }[] = [
-  { flavor: "blackCherry", color: "#710523", name: "Black Cherry" },
-  { flavor: "grape", color: "#572981", name: "Grape Goodness" },
-  { flavor: "lemonLime", color: "#164405", name: "Lemon Lime" },
-  {
-    flavor: "strawberryLemonade",
-    color: "#690B3D",
-    name: "Strawberry Lemonade",
-  },
-  { flavor: "watermelon", color: "#4B7002", name: "Watermelon Crush" },
-];
+    { flavor: "rebeliveApex", color: "#000000", name: "REBELIVE Apex" },
+    { flavor: "rebeliveApex", color: "#1e1e1e", name: "Apex Stealth" },
+    { flavor: "rebeliveApex", color: "#3d00ad", name: "Apex Midnight" },
+    { flavor: "rebeliveApex", color: "#690B3D", name: "Apex Volcano" },
+    { flavor: "rebeliveApex", color: "#164405", name: "Apex Neon" },
+  ];
 
 /**
  * Props for `Carousel`.
@@ -99,14 +95,14 @@ const Carousel = ({ slice }: CarouselProps): JSX.Element => {
     <section
       data-slice-type={slice.slice_type}
       data-slice-variation={slice.variation}
-      className="carousel grid-rows-[auto, 4fr, auto] relative grid h-screen justify-center overflow-hidden bg-white py-12 text-white"
+      className="carousel grid-rows-[auto, 4fr, auto] relative grid h-screen justify-center overflow-hidden bg-black py-12 text-white"
     >
-      <div className="background pointer-events-none absolute inset-0 bg-[#710523] opacity-50" />
+      <div className="background pointer-events-none absolute inset-0 bg-[#1a1a1a] opacity-50" />
 
-      <WavyCircles className="absolute left-1/2 top-1/2 h-[120vmin] -translate-x-1/2 -translate-y-1/2 text-[#710523]" />
+      <WavyCircles className="absolute left-1/2 top-1/2 h-[120vmin] -translate-x-1/2 -translate-y-1/2 text-[#333]" />
 
       <h2 className="relative text-center text-5xl font-bold">
-        <PrismicText field={slice.primary.heading} />
+        The APEX Range
       </h2>
 
       <div className="grid grid-cols-[auto,auto,auto] items-center">

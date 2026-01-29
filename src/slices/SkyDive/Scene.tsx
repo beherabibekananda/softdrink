@@ -154,13 +154,13 @@ export default function Scene({ sentence, flavor }: SkyDiveProps) {
         {" "}
         <FloatingCan
           ref={canRef}
-          flavor={flavor}
+          flavor="rebeliveApex"
           rotationIntensity={0}
           floatIntensity={3}
           floatSpeed={3}
         >
 
-        <pointLight intensity={30} color={"#8C0413"} decay={0.6}></pointLight>
+          <pointLight intensity={30} color={"#8C0413"} decay={0.6}></pointLight>
 
         </FloatingCan>
       </group>

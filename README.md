@@ -1,21 +1,21 @@
-# Fizzi - Interactive 3D Landing Page
+# REBELIVE - Interactive 3D Landing Page
 
 ## Project Overview
 
-Fizzi is an innovative web application showcasing an interactive landing page with advanced 3D animations, built using cutting-edge web technologies.
+REBELIVE is an innovative web application showcasing an interactive landing page with advanced 3D animations, built using cutting-edge web technologies.
 
 
 
-![front](https://github.com/bsilvers64/Fizzi/blob/2c6016a61ad5859a55afa07b8492cbde9a06b7fd/resources/front.gif)
+![front](https://github.com/bsilvers64/REBELIVE/blob/2c6016a61ad5859a55afa07b8492cbde9a06b7fd/resources/front.gif)
 
 ## Links
 
 ### Visit the Website -
 
-[Fizzi-Soda](https://fizzi-utvl.vercel.app)
+[REBELIVE-Soda](https://fizzi-utvl.vercel.app)
 
 ### notes and blog -
-[Notion Article](https://marmalade-practice-424.notion.site/Fizzi-landing-page-13d3ca7f759c80c09e90ce2dee9b92f4)
+[Notion Article](https://marmalade-practice-424.notion.site/REBELIVE-landing-page-13d3ca7f759c80c09e90ce2dee9b92f4)
 
 
 ## Tech Stack
@@ -129,7 +129,7 @@ Fizzi is an innovative web application showcasing an interactive landing page wi
 
 ### Installation
 ```bash
-git clone https://github.com/bsilvers64/Fizzi.git
+git clone https://github.com/bsilvers64/REBELIVE.git
 cd fizzi
 npm install
 npm run dev

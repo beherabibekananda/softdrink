@@ -13,23 +13,31 @@ import { components } from "@/slices";
 // Use the SliceZone to render the content of the page.
 
 export async function generateMetadata(): Promise<Metadata> {
-  const client = createClient();
-  const home = await client.getByUID("page", "home");
-
   return {
-    title: prismic.asText(home.data.title),
-    description: home.data.meta_description,
+    title: "REBELIVE - Science-Backed Functional Energy",
+    description: "Oxytrium Dynamics presents REBELIVE: A sugar-free functional energy drink for peak performance and sustainable wellness.",
     openGraph: {
-      title: home.data.meta_title ?? undefined,
-      images: [{ url: home.data.meta_image.url ?? "" }],
+      title: "REBELIVE - Redefining Energy",
+      images: [{ url: "/labels/rebelive-apex.png" }],
     },
   };
 }
+
+import ProductGrid from "@/components/ProductGrid";
+import CompanyProfile from "@/components/CompanyProfile";
+import TeamSection from "@/components/TeamSection";
 
 export default async function Index() {
   // The client queries content from the Prismic API
   const client = createClient();
   const home = await client.getByUID("page", "home");
 
-  return <SliceZone slices={home.data.slices} components={components} />;
+  return (
+    <>
+      <SliceZone slices={home.data.slices} components={components} />
+      <CompanyProfile />
+      <ProductGrid />
+      <TeamSection />
+    </>
+  );
 }

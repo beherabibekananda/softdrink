@@ -11,6 +11,7 @@ const flavorTextures = {
   blackCherry: "/labels/cherry.png",
   strawberryLemonade: "/labels/strawberry.png",
   watermelon: "/labels/watermelon.png",
+  rebeliveApex: "/labels/rebelive-apex.png",
 };
 
 const metalMaterial = new THREE.MeshStandardMaterial({
@@ -25,24 +26,25 @@ export type SodaCanProps = {
 };
 
 export function SodaCan({
-  flavor = "blackCherry",
+  flavor = "rebeliveApex",
   scale = 2,
   ...props
 }: SodaCanProps) {
   const { nodes } = useGLTF("/Soda-can.gltf");
 
   const labels = useTexture(flavorTextures);
-  
+
   // Fixes upside down labels
   labels.strawberryLemonade.flipY = false;
   labels.blackCherry.flipY = false;
   labels.watermelon.flipY = false;
   labels.grape.flipY = false;
   labels.lemonLime.flipY = false;
+  labels.rebeliveApex.flipY = false;
 
   labels[flavor].minFilter = THREE.LinearFilter;
   labels[flavor].magFilter = THREE.LinearFilter;
-  
+
 
   const label = labels[flavor];
 
@@ -52,14 +54,15 @@ export function SodaCan({
         castShadow
         receiveShadow
         geometry={(nodes.cylinder as THREE.Mesh).geometry}
-        material={metalMaterial}
-      />
+      >
+        <meshStandardMaterial roughness={0.4} metalness={0.3} map={label} />
+      </mesh>
       <mesh
         castShadow
         receiveShadow
         geometry={(nodes.cylinder_1 as THREE.Mesh).geometry}
       >
-        <meshStandardMaterial roughness={0.15} metalness={0.7} map={label} />
+        <meshStandardMaterial roughness={0.4} metalness={0.3} map={label} />
       </mesh>
       <mesh
         castShadow

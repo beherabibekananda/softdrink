@@ -14,10 +14,10 @@ gsap.registerPlugin(useGSAP, ScrollTrigger);
 
 type Props = {};
 
-export default function Scene({}: Props) {
+export default function Scene({ }: Props) {
   const canRef = useRef<Group>(null);
 
-  const bgColors = ["#FFA6B5", "#E9CFF6", "#CBEF9A"];
+  const bgColors = ["#0a0a0a", "#111111", "#1a1a1a"];
 
   // we only render our view component if isDesktop is true
   const isDesktop = useMediaQuery("(min-width: 768px)", true);
@@ -77,7 +77,7 @@ export default function Scene({}: Props) {
       position-x={isDesktop ? 1 : 0}
       rotation-y={isDesktop ? -0.3 : 0}
     >
-      <FloatingCan flavor="strawberryLemonade" ref={canRef} />
+      <FloatingCan flavor="rebeliveApex" ref={canRef} />
       <Environment files="/hdr/lobby.hdr" environmentIntensity={1.5} />
     </group>
   );

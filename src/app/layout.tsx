@@ -4,6 +4,7 @@ import localFont from 'next/font/local'
 
 import "./app.css"
 import Header from "@/components/Header";
+import CartDrawer from "@/components/CartDrawer";
 import ViewCanvas from "@/components/ViewCanvas";
 import Footer from "@/components/Footer";
 
@@ -23,13 +24,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={alpino.variable}>
-      <body className="overflow-x-hidden bg-yellow-300">
+      <body className="overflow-x-hidden bg-black text-white">
         <Header />
-        <main> 
+        <CartDrawer />
+        <main>
           {children}
-          <ViewCanvas/>
+          <ViewCanvas />
         </main>
-        <Footer/>
+        <Footer />
       </body>
       <PrismicPreview repositoryName={repositoryName} />
     </html>

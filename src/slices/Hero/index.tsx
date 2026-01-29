@@ -81,10 +81,10 @@ const Hero = ({ slice }: HeroProps): JSX.Element => {
         .fromTo(
           "body",
           {
-            backgroundColor: "#FDE047",
+            backgroundColor: "#1a1a1a",
           },
           {
-            backgroundColor: "#D9F99D",
+            backgroundColor: "#000000",
             overwrite: "auto",
           },
           1.5,
@@ -122,25 +122,21 @@ const Hero = ({ slice }: HeroProps): JSX.Element => {
       <div className="grid">
         <div className="grid h-screen place-content-center">
           <div className="grid auto-rows-min place-items-center text-center">
-            <h1 className="hero-header text-7xl font-black uppercase leading-[.8] text-orange-500 md:text-[9rem] lg:text-[13rem]">
-              <TextSplitter
-                text={asText(slice.primary.heading)}
-                wordDisplayStyle="block"
-                className="hero-header-word"
-              />
+            <h1 className="hero-header text-7xl font-black uppercase leading-[.8] text-white md:text-[9rem] lg:text-[13rem]">
+              <span className="hero-header-word block">REBELIVE</span>
             </h1>
 
-            <div className="hero-subheading mt-12 text-5xl font-semibold text-sky-950 lg:text-6xl">
-              <PrismicRichText field={slice.primary.subheading} />
+            <div className="hero-subheading mt-12 text-5xl font-semibold text-slate-300 lg:text-6xl text-balance">
+              Redefining Energy with Science-Backed Wellness.
             </div>
 
-            <div className="hero-body text-2xl font-normal text-sky-950">
-              <PrismicRichText field={slice.primary.body} />
+            <div className="hero-body text-2xl font-normal text-slate-400 max-w-2xl">
+              Empowering stressed students and professionals to enhance performance and productivity.
             </div>
 
             <Button
-              buttonLink={slice.primary.button_link}
-              buttonText={slice.primary.button_text}
+              buttonLink={{ url: "#menu" }}
+              buttonText="Experience REBELIVE"
               className="hero-button mt-12"
             />
           </div>
@@ -151,12 +147,11 @@ const Hero = ({ slice }: HeroProps): JSX.Element => {
               className="w-full md:hidden"
               field={slice.primary.cans_image}
             />
-            <h2 className="text-side-heading text-balance text-6xl font-black uppercase text-sky-950 lg:text-8xl">
-              <TextSplitter text={asText(slice.primary.second_heading)} />
-              {/* <PrismicRichText field={slice.primary.second_heading} /> */}
+            <h2 className="text-side-heading text-balance text-6xl font-black uppercase text-white lg:text-8xl">
+              Modern Wellness
             </h2>
-            <div className="text-side-body mt-4 max-w-xl text-balance text-xl font-normal text-slate-950">
-              <PrismicRichText field={slice.primary.second_body} />
+            <div className="text-side-body mt-4 max-w-xl text-balance text-xl font-normal text-slate-300">
+              Oxytrium Dynamics is leading the market with innovative, everyday functional foods and beverages. Lead the movement.
             </div>
           </div>
         </div>
