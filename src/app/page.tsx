@@ -31,7 +31,7 @@ import ViewManager from "@/components/ViewManager";
 export default async function Index() {
   // The client queries content from the Prismic API
   const client = createClient();
-  let slices = [];
+  let slices: any[] = [];
 
   try {
     const home = await client.getByUID("page", "home");
