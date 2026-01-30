@@ -5,6 +5,8 @@ import localFont from 'next/font/local'
 import "./app.css"
 import Header from "@/components/Header";
 import CartDrawer from "@/components/CartDrawer";
+import Toast from "@/components/Toast";
+import FlyingCanEffect from "@/components/FlyingCanEffect";
 import ViewCanvas from "@/components/ViewCanvas";
 import Footer from "@/components/Footer";
 
@@ -27,11 +29,12 @@ export default function RootLayout({
       <body className="overflow-x-hidden bg-black text-white">
         <Header />
         <CartDrawer />
+        <Toast />
+        <FlyingCanEffect />
         <main>
           {children}
           <ViewCanvas />
         </main>
-        <Footer />
       </body>
       <PrismicPreview repositoryName={repositoryName} />
     </html>

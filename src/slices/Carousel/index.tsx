@@ -12,20 +12,17 @@ import { WavyCircles } from "./WavyCircles";
 import { Group } from "three";
 
 import gsap from "gsap";
+import { useCart } from "@/hooks/useCart";
 
 const SPINS_ON_CHANGE = 8;
 
-const FLAVORS: {
-  flavor: SodaCanProps["flavor"];
-  color: string;
-  name: string;
-}[] = [
-    { flavor: "rebeliveApex", color: "#000000", name: "REBELIVE Apex" },
-    { flavor: "rebeliveApex", color: "#1e1e1e", name: "Apex Stealth" },
-    { flavor: "rebeliveApex", color: "#3d00ad", name: "Apex Midnight" },
-    { flavor: "rebeliveApex", color: "#690B3D", name: "Apex Volcano" },
-    { flavor: "rebeliveApex", color: "#164405", name: "Apex Neon" },
-  ];
+const FLAVORS = [
+  { id: "apex-black", flavor: "rebeliveApex" as const, color: "#000000", name: "REBELIVE Apex", price: 125, flavor_tag: "Original Energy", image: "/labels/apex-black.png" },
+  { id: "apex-stealth", flavor: "rebeliveApex" as const, color: "#1e1e1e", name: "Apex Stealth", price: 125, flavor_tag: "Zero Sugar", image: "/labels/apex-black.png" },
+  { id: "apex-midnight", flavor: "rebeliveApex" as const, color: "#3d00ad", name: "Apex Midnight", price: 150, flavor_tag: "Mental Focus", image: "/labels/midnight.png" },
+  { id: "apex-volcano", flavor: "rebeliveApex" as const, color: "#690B3D", name: "Apex Volcano", price: 145, flavor_tag: "Thermogenic Fusion", image: "/labels/volcano.png" },
+  { id: "apex-neon", flavor: "rebeliveApex" as const, color: "#164405", name: "Apex Neon", price: 145, flavor_tag: "Electrolyte Boost", image: "/labels/neon.png" },
+];
 
 /**
  * Props for `Carousel`.
@@ -37,6 +34,8 @@ export type CarouselProps = SliceComponentProps<Content.CarouselSlice>;
  */
 const Carousel = ({ slice }: CarouselProps): JSX.Element => {
   const [currentFlavorIndex, setCurrentFlavorIndex] = useState(0);
+  const addItem = useCart((state) => state.addItem);
+  const toggleCart = useCart((state) => state.toggleCart);
 
   const sodaCanRef = useRef<Group>(null);
 
@@ -144,13 +143,32 @@ const Carousel = ({ slice }: CarouselProps): JSX.Element => {
       </div>
 
       <div className="text-area relative mx-auto text-center">
-        <div className="text-wrapper text-4xl font-medium">
+        <div className="text-wrapper text-4xl font-black uppercase tracking-tight">
           <p>{FLAVORS[currentFlavorIndex].name}</p>
         </div>
 
-        <div className="mt-2 text-2xl font-normal opacity-90">
-          <PrismicText field={slice.primary.price_copy} />
+        <div className="mt-2 text-2xl font-bold text-orange-500">
+          ₹{FLAVORS[currentFlavorIndex].price}
         </div>
+
+        <button
+          onClick={(e) => {
+            const product = FLAVORS[currentFlavorIndex];
+            addItem({
+              id: product.id,
+              name: product.name,
+              price: product.price,
+              flavor: product.flavor_tag,
+              image: product.image
+            });
+            toggleCart();
+            useCart.getState().triggerAnimation(product.image, e.clientX, e.clientY);
+          }}
+          className="mt-6 inline-flex items-center gap-2 rounded-full bg-white px-6 py-3 font-black uppercase text-black transition-transform hover:scale-105 active:scale-95 shadow-lg shadow-white/5"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="M12 5v14M5 12h14" /></svg>
+          Add to Pack
+        </button>
       </div>
     </section>
   );

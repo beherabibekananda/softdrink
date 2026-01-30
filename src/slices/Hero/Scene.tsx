@@ -115,10 +115,14 @@ export default function Scene({ }: Props) {
       .to(can5ref.current.position, { x: 0.3, y: 0.5, z: -0.5 }, 0)
       .to(can5ref.current.rotation, { z: -0.25 }, 0)
 
-      // now that all cans are on screen, shift the entire group towards right
+      // now that all cans are on screen, shift the entire group towards right (less on mobile)
       .to(
         groupRef.current.position,
-        { x: 1, duration: 3, ease: "sign.inOut" },
+        {
+          x: window.innerWidth < 768 ? 0 : 1,
+          duration: 3,
+          ease: "sign.inOut"
+        },
         1.3,
       );
   });
@@ -136,19 +140,19 @@ export default function Scene({ }: Props) {
       <group ref={can2GroupRef}>
         <FloatingCan
           ref={can2ref}
-          flavor="rebeliveApex"
+          flavor="neon"
           floatSpeed={FLOAT_SPEED}
         />
       </group>
 
-      <FloatingCan ref={can3ref} flavor="rebeliveApex" floatSpeed={FLOAT_SPEED} />
+      <FloatingCan ref={can3ref} flavor="volcano" floatSpeed={FLOAT_SPEED} />
 
       <FloatingCan
         ref={can4ref}
-        flavor="rebeliveApex"
+        flavor="frost"
         floatSpeed={FLOAT_SPEED}
       />
-      <FloatingCan ref={can5ref} flavor="rebeliveApex" floatSpeed={FLOAT_SPEED} />
+      <FloatingCan ref={can5ref} flavor="midnight" floatSpeed={FLOAT_SPEED} />
 
       <Environment files="/hdr/lobby.hdr" environmentIntensity={1.5} />
     </group>

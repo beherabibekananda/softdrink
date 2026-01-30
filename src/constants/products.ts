@@ -5,7 +5,7 @@ export const PRODUCTS = [
         flavor: "Original Energy",
         price: 125,
         color: "#000000",
-        image: "/labels/rebelive-apex.png"
+        image: "/labels/apex-black.png"
     },
     {
         id: "apex-stealth",
@@ -13,7 +13,7 @@ export const PRODUCTS = [
         flavor: "Zero Sugar",
         price: 125,
         color: "#1e1e1e",
-        image: "/labels/rebelive-apex.png"
+        image: "/labels/apex-black.png"
     },
     {
         id: "apex-neon",
@@ -21,7 +21,7 @@ export const PRODUCTS = [
         flavor: "Electrolyte Boost",
         price: 145,
         color: "#a3ff12",
-        image: "/labels/rebelive-apex.png"
+        image: "/labels/neon.png"
     },
     {
         id: "apex-volcano",
@@ -29,7 +29,7 @@ export const PRODUCTS = [
         flavor: "Thermogenic Fusion",
         price: 145,
         color: "#ff4d00",
-        image: "/labels/rebelive-apex.png"
+        image: "/labels/volcano.png"
     },
     {
         id: "apex-frost",
@@ -37,7 +37,7 @@ export const PRODUCTS = [
         flavor: "Iced Refreshment",
         price: 125,
         color: "#00c3ff",
-        image: "/labels/rebelive-apex.png"
+        image: "/labels/frost.png"
     },
     {
         id: "apex-midnight",
@@ -45,6 +45,6 @@ export const PRODUCTS = [
         flavor: "Mental Focus",
         price: 150,
         color: "#3d00ad",
-        image: "/labels/rebelive-apex.png"
+        image: "/labels/midnight.png"
     }
 ];

@@ -3,7 +3,7 @@
 import React from "react";
 import { PRODUCTS } from "@/constants/products";
 import { useCart } from "@/hooks/useCart";
-import { View } from "@react-three/drei";
+import { View, Environment, ContactShadows } from "@react-three/drei";
 import { SodaCan } from "@/components/SodaCan";
 
 export default function ProductGrid() {
@@ -42,82 +42,84 @@ export default function ProductGrid() {
                             className="group relative"
                             style={{ animationDelay: `${index * 100}ms` }}
                         >
-                            {/* Card */}
-                            <div className="relative flex flex-col rounded-[2rem] bg-gradient-to-br from-[#2a2a2a] to-[#1f1f1f] p-6 md:p-8 transition-all duration-500 hover:scale-[1.02] hover:shadow-2xl hover:shadow-purple-500/10 border border-white/10 hover:border-white/25 overflow-hidden">
+                            {/* Can-Inspired Card */}
+                            <div className="relative flex flex-col rounded-[3rem] md:rounded-[4rem] bg-gradient-to-b from-[#2a2a2a] via-[#1a1a1a] to-[#0a0a0a] p-6 md:p-8 transition-all duration-700 hover:scale-[1.05] hover:-translate-y-4 hover:shadow-[0_40px_80px_-20px_rgba(0,0,0,0.8)] border border-white/5 hover:border-white/20 aspect-[3/4.5] sm:aspect-[2/3.5] group-hover:shadow-[0_0_50px_rgba(255,255,255,0.05)] overflow-hidden">
 
-                                {/* Animated Gradient Border */}
-                                <div className="absolute inset-0 rounded-[2rem] opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none">
-                                    <div
-                                        className="absolute inset-[-1px] rounded-[2rem] bg-gradient-to-r from-transparent via-white/20 to-transparent"
-                                        style={{
-                                            background: `linear-gradient(135deg, transparent, ${product.color}40, transparent)`
-                                        }}
-                                    />
-                                </div>
+                                {/* Metallic Sheen Overlay */}
+                                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/[0.03] to-transparent pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
 
-                                {/* Product Glow */}
+                                {/* Product Glow Gradient */}
                                 <div
-                                    className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-1/2 rounded-full blur-[80px] opacity-10 group-hover:opacity-40 transition-opacity duration-700"
+                                    className="absolute -top-[20%] left-1/2 -translate-x-1/2 w-[150%] h-[60%] rounded-full blur-[100px] opacity-20 group-hover:opacity-60 transition-opacity duration-1000"
                                     style={{ backgroundColor: product.color }}
                                 />
 
-                                {/* 3D Can View */}
-                                <div className="relative aspect-square mb-6 flex items-center justify-center pointer-events-auto">
-                                    <div className="h-full w-full cursor-grab active:cursor-grabbing transition-transform duration-500 group-hover:scale-110">
+                                {/* 3D Can View - Enhanced Scale */}
+                                <div className="relative h-[55%] mb-4 flex items-center justify-center pointer-events-auto">
+                                    <div className="h-full w-full cursor-grab active:cursor-grabbing transition-transform duration-700 group-hover:scale-125 group-hover:-rotate-3">
                                         <View className="h-full w-full">
-                                            <SodaCan flavor="rebeliveApex" scale={1.2} />
+                                            <ambientLight intensity={0.8} />
+                                            <spotLight position={[10, 10, 10]} angle={0.2} penumbra={1} intensity={2} />
+                                            <SodaCan
+                                                flavor={
+                                                    product.id === "apex-black" || product.id === "apex-stealth"
+                                                        ? "rebeliveApex"
+                                                        : (product.id.split("-")[1] as any)
+                                                }
+                                                scale={1.4}
+                                            />
+                                            <ContactShadows opacity={0.4} scale={10} blur={3} far={1} />
+                                            <Environment preset="city" />
                                         </View>
                                     </div>
                                 </div>
 
-                                {/* Product Info */}
-                                <div className="relative z-10 flex-1 flex flex-col">
-                                    {/* Flavor Tag */}
-                                    <div className="flex items-center gap-2 mb-3">
-                                        <div
-                                            className="w-2 h-2 rounded-full"
-                                            style={{ backgroundColor: product.color }}
-                                        />
-                                        <span className="text-[10px] font-black uppercase tracking-[0.2em] text-white/50">
+                                {/* Product Info Section */}
+                                <div className="relative z-10 mt-auto flex flex-col items-center text-center">
+                                    {/* Flavor Badge */}
+                                    <div className="px-3 py-1 rounded-full bg-white/5 border border-white/10 mb-3 md:mb-4 backdrop-blur-md">
+                                        <span className="text-[8px] md:text-[9px] font-black uppercase tracking-[0.25em] text-white/60">
                                             {product.flavor}
                                         </span>
                                     </div>
 
                                     {/* Name */}
-                                    <h3 className="font-alpino text-2xl md:text-3xl font-black text-white mb-4 group-hover:text-white transition-colors">
+                                    <h3 className="font-alpino text-2xl md:text-4xl font-black text-white mb-4 md:mb-6 leading-none tracking-tighter">
                                         {product.name}
                                     </h3>
 
-                                    {/* Price & CTA */}
-                                    <div className="mt-auto pt-4 border-t border-white/10 flex items-center justify-between">
+                                    {/* CTA Area */}
+                                    <div className="w-full pt-4 md:pt-6 border-t border-white/5 flex flex-col items-center gap-3 md:gap-4">
                                         <div className="flex flex-col">
-                                            <span className="text-xs text-white/40 uppercase tracking-widest">Price</span>
-                                            <span className="text-2xl font-black text-white">₹{product.price}</span>
+                                            <span className="text-xl md:text-2xl font-black text-white">₹{product.price}</span>
                                         </div>
                                         <button
-                                            onClick={() => addItem({
-                                                id: product.id,
-                                                name: product.name,
-                                                price: product.price,
-                                                flavor: product.flavor,
-                                                image: product.image
-                                            })}
-                                            className="relative overflow-hidden flex items-center gap-2 rounded-full bg-white px-5 py-3 font-bold text-black text-sm transition-all duration-300 hover:bg-slate-100 active:scale-95 shadow-lg shadow-white/10 group/btn"
+                                            onClick={(e) => {
+                                                addItem({
+                                                    id: product.id,
+                                                    name: product.name,
+                                                    price: product.price,
+                                                    flavor: product.flavor,
+                                                    image: product.image
+                                                });
+                                                useCart.getState().triggerAnimation(
+                                                    product.image,
+                                                    e.clientX,
+                                                    e.clientY
+                                                );
+                                            }}
+                                            className="w-full flex items-center justify-center gap-2 rounded-xl md:rounded-2xl bg-white px-4 md:px-6 py-3 md:py-4 font-black uppercase text-black text-[10px] md:text-xs transition-all duration-300 hover:bg-orange-500 hover:text-white active:scale-95 shadow-2xl"
                                         >
-                                            <span className="relative z-10 flex items-center gap-2">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="M12 5v14M5 12h14" /></svg>
-                                                Add
-                                            </span>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="M12 5v14M5 12h14" /></svg>
+                                            Add to Pack
                                         </button>
                                     </div>
                                 </div>
 
-                                {/* Corner Accent */}
+                                {/* Bottom Glow Accent */}
                                 <div
-                                    className="absolute top-0 right-0 w-24 h-24 opacity-30 group-hover:opacity-50 transition-opacity duration-500"
-                                    style={{
-                                        background: `radial-gradient(circle at top right, ${product.color}, transparent 70%)`
-                                    }}
+                                    className="absolute -bottom-[10%] left-0 right-0 h-1/4 blur-[60px] opacity-10"
+                                    style={{ backgroundColor: product.color }}
                                 />
                             </div>
                         </div>

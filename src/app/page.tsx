@@ -26,18 +26,21 @@ export async function generateMetadata(): Promise<Metadata> {
 import ProductGrid from "@/components/ProductGrid";
 import CompanyProfile from "@/components/CompanyProfile";
 import TeamSection from "@/components/TeamSection";
+import ViewManager from "@/components/ViewManager";
 
 export default async function Index() {
   // The client queries content from the Prismic API
   const client = createClient();
-  const home = await client.getByUID("page", "home");
+  let slices = [];
+
+  try {
+    const home = await client.getByUID("page", "home");
+    slices = home.data.slices;
+  } catch (e) {
+    console.error("Prismic fetch failed:", e);
+  }
 
   return (
-    <>
-      <SliceZone slices={home.data.slices} components={components} />
-      <CompanyProfile />
-      <ProductGrid />
-      <TeamSection />
-    </>
+    <ViewManager slices={slices} />
   );
 }

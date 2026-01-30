@@ -11,13 +11,23 @@ const flavorTextures = {
   blackCherry: "/labels/cherry.png",
   strawberryLemonade: "/labels/strawberry.png",
   watermelon: "/labels/watermelon.png",
-  rebeliveApex: "/labels/rebelive-apex.png",
+  rebeliveApex: "/labels/apex-black.png",
+  neon: "/labels/neon.png",
+  volcano: "/labels/volcano-v2.png",
+  frost: "/labels/frost.png",
+  midnight: "/labels/midnight.png",
 };
 
 const metalMaterial = new THREE.MeshStandardMaterial({
-  roughness: 0.3,
+  roughness: 0.2,
   metalness: 1,
-  color: "#bbbbbb",
+  color: "#d1d1d1",
+});
+
+const bodyMaterial = new THREE.MeshStandardMaterial({
+  roughness: 0.4,
+  metalness: 0.2,
+  color: "#111111", // Dark base for "pasted" look
 });
 
 export type SodaCanProps = {
@@ -34,6 +44,14 @@ export function SodaCan({
 
   const labels = useTexture(flavorTextures);
 
+  // Fix texture wrapping and centering
+  Object.values(labels).forEach((tex) => {
+    tex.wrapS = THREE.RepeatWrapping;
+    tex.wrapT = THREE.RepeatWrapping;
+    tex.repeat.set(1, 1);
+    tex.offset.set(0, 0);
+  });
+
   // Fixes upside down labels
   labels.strawberryLemonade.flipY = false;
   labels.blackCherry.flipY = false;
@@ -41,29 +59,45 @@ export function SodaCan({
   labels.grape.flipY = false;
   labels.lemonLime.flipY = false;
   labels.rebeliveApex.flipY = false;
+  labels.neon.flipY = false;
+  labels.volcano.flipY = false;
+  labels.frost.flipY = false;
+  labels.midnight.flipY = false;
 
-  labels[flavor].minFilter = THREE.LinearFilter;
-  labels[flavor].magFilter = THREE.LinearFilter;
-
+  // Flavor specific alignment fixes
+  if (flavor === "neon") {
+    labels.neon.offset.set(0, 0); // Adjust if logo is off-center
+    labels.neon.repeat.set(1, 1);
+  }
 
   const label = labels[flavor];
+  label.anisotropy = 16;
+  label.colorSpace = THREE.SRGBColorSpace;
 
   return (
     <group {...props} dispose={null} scale={scale} rotation={[0, -Math.PI, 0]}>
-      <mesh
-        castShadow
-        receiveShadow
-        geometry={(nodes.cylinder as THREE.Mesh).geometry}
-      >
-        <meshStandardMaterial roughness={0.4} metalness={0.3} map={label} />
-      </mesh>
+      {/* Main Body with Label */}
       <mesh
         castShadow
         receiveShadow
         geometry={(nodes.cylinder_1 as THREE.Mesh).geometry}
       >
-        <meshStandardMaterial roughness={0.4} metalness={0.3} map={label} />
+        <meshStandardMaterial
+          map={label}
+          roughness={0.4}
+          metalness={0.1}
+        />
       </mesh>
+
+      {/* Top and Bottom Metallic Rims */}
+      <mesh
+        castShadow
+        receiveShadow
+        geometry={(nodes.cylinder as THREE.Mesh).geometry}
+        material={metalMaterial}
+      />
+
+      {/* Can Tab */}
       <mesh
         castShadow
         receiveShadow

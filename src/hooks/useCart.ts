@@ -19,12 +19,19 @@ interface CartStore {
   clearCart: () => void;
   totalItems: () => number;
   totalPrice: () => number;
+  // Animation State
+  animatingCan: { image: string; x: number; y: number } | null;
+  triggerAnimation: (image: string, x: number, y: number) => void;
+  clearAnimation: () => void;
 }
 
 export const useCart = create<CartStore>((set, get) => ({
   items: [],
   isOpen: false,
+  animatingCan: null,
   toggleCart: () => set((state) => ({ isOpen: !state.isOpen })),
+  triggerAnimation: (image, x, y) => set({ animatingCan: { image, x, y } }),
+  clearAnimation: () => set({ animatingCan: null }),
   addItem: (newItem) => {
     const currentItems = get().items;
     const existingItem = currentItems.find((item) => item.id === newItem.id);

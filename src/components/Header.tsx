@@ -10,30 +10,31 @@ export default function Header() {
   const totalItems = useCart((state) => state.totalItems());
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 py-4 md:px-12 bg-black/10 backdrop-blur-md">
-      <Link href="/" className="group flex items-center gap-2">
-        <span className="text-2xl font-black tracking-tighter text-white md:text-3xl">
+    <header className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 py-3 md:px-12 md:py-4 bg-black/10 backdrop-blur-md">
+      <Link href="#experience" className="group flex items-center gap-2">
+        <span className="text-xl md:text-3xl font-black tracking-tighter text-white">
           REBELIVE
         </span>
       </Link>
 
       <nav className="hidden items-center gap-8 md:flex">
-        <Link href="/" className="text-sm font-bold uppercase tracking-widest text-white transition-colors hover:text-slate-300">
-          Home
+        <Link href="#experience" className="text-sm font-bold uppercase tracking-widest text-white transition-colors hover:text-slate-300">
+          Experience
         </Link>
         <Link href="#about" className="text-sm font-bold uppercase tracking-widest text-white transition-colors hover:text-slate-300">
-          Who We Are
+          Science
         </Link>
         <Link href="#menu" className="text-sm font-bold uppercase tracking-widest text-white transition-colors hover:text-slate-300">
-          Products
+          Store
         </Link>
         <Link href="#contact" className="text-sm font-bold uppercase tracking-widest text-white transition-colors hover:text-slate-300">
-          Contact
+          Squad
         </Link>
       </nav>
 
       <div className="flex items-center gap-4">
         <button
+          id="cart-button"
           onClick={toggleCart}
           className="relative flex h-12 w-12 items-center justify-center rounded-full bg-white text-black shadow-xl transition-transform hover:scale-110 active:scale-95"
           aria-label="Toggle Cart"
