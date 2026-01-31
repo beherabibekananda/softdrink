@@ -13,6 +13,7 @@ import { Group } from "three";
 
 import gsap from "gsap";
 import { useCart } from "@/hooks/useCart";
+import { useMediaQuery } from "@/hooks/useMediaQuery";
 
 const SPINS_ON_CHANGE = 8;
 
@@ -36,6 +37,7 @@ const Carousel = ({ slice }: CarouselProps): JSX.Element => {
   const [currentFlavorIndex, setCurrentFlavorIndex] = useState(0);
   const addItem = useCart((state) => state.addItem);
   const toggleCart = useCart((state) => state.toggleCart);
+  const isDesktop = useMediaQuery("(min-width: 768px)", true);
 
   const sodaCanRef = useRef<Group>(null);
 
@@ -94,7 +96,7 @@ const Carousel = ({ slice }: CarouselProps): JSX.Element => {
     <section
       data-slice-type={slice.slice_type}
       data-slice-variation={slice.variation}
-      className="carousel grid-rows-[auto, 4fr, auto] relative grid h-screen justify-center overflow-hidden bg-black py-12 text-white"
+      className="carousel grid-rows-[auto, 4fr, auto] relative grid min-h-screen justify-center overflow-hidden bg-black py-12 text-white"
     >
       <div className="background pointer-events-none absolute inset-0 bg-[#1a1a1a] opacity-50" />
 
@@ -115,7 +117,7 @@ const Carousel = ({ slice }: CarouselProps): JSX.Element => {
 
         {/* can */}
 
-        <View className="aspect-square h-[70vmin] min-h-40">
+        <View className={clsx("aspect-square min-h-40", isDesktop ? "h-[70vmin]" : "h-[50vmin]")}>
           <Center position={[0, 0, 1.5]}>
             <FloatingCan
               floatIntensity={0.3}

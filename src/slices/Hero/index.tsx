@@ -1,11 +1,9 @@
 "use client";
 
-import { asText, Content } from "@prismicio/client";
-import { PrismicNextImage, PrismicNextLink } from "@prismicio/next";
-import { PrismicRichText, SliceComponentProps } from "@prismicio/react";
+import { Content } from "@prismicio/client";
+import { SliceComponentProps } from "@prismicio/react";
 
 import { Bounded } from "@/components/Bounded";
-import Button from "@/components/Button";
 import { TextSplitter } from "@/components/TextSplitter";
 
 import gsap from "gsap";
@@ -34,42 +32,46 @@ const Hero = ({ slice }: HeroProps): JSX.Element => {
   const addItem = useCart((state) => state.addItem);
   const toggleCart = useCart((state) => state.toggleCart);
 
-  // we only render our view component if isDesktop is true
   const isDesktop = useMediaQuery("(min-width: 768px)", true);
 
   useGSAP(
     () => {
-      // if not ready, then don't load anything
       if (!ready) return;
 
       const introTL = gsap.timeline();
 
       introTL
         .set(".hero", { opacity: 1 })
-        .from(".hero-header-word", {
-          scale: 4,
+        .from(".hero-char", {
+          y: 100,
           opacity: 0,
-          ease: "power4.in",
-          delay: 0.3,
-          stagger: 0.8,
+          rotateX: -90,
+          stagger: 0.05,
+          ease: "expo.out",
+          duration: 1.5,
+          delay: 0.5,
         })
         .from(
           ".hero-subheading",
           {
             opacity: 0,
-            y: 30,
+            y: 20,
+            duration: 1,
           },
-          "+=.8",
+          "-=0.8",
         )
         .from(".hero-body", {
           opacity: 0,
           y: 10,
-        })
+          duration: 1,
+        }, "-=0.5")
         .from(".hero-button", {
           opacity: 0,
-          y: 10,
-          duration: 0.6,
-        });
+          y: 20,
+          stagger: 0.2,
+          duration: 0.8,
+          ease: "back.out(1.7)",
+        }, "-=0.3");
 
       const scrollTl = gsap.timeline({
         scrollTrigger: {
@@ -83,13 +85,8 @@ const Hero = ({ slice }: HeroProps): JSX.Element => {
       scrollTl
         .fromTo(
           "body",
-          {
-            backgroundColor: "#1a1a1a",
-          },
-          {
-            backgroundColor: "#000000",
-            overwrite: "auto",
-          },
+          { backgroundColor: "#0a0a0a" },
+          { backgroundColor: "#000000", overwrite: "auto" },
           1.5,
         )
         .from(".text-side-heading .split-char", {
@@ -113,29 +110,33 @@ const Hero = ({ slice }: HeroProps): JSX.Element => {
     <Bounded
       data-slice-type={slice.slice_type}
       data-slice-variation={slice.variation}
-      className="hero opacity-0"
+      className="hero opacity-0 overflow-hidden"
     >
-      <View className="hero-scene pointer-events-none sticky top-0 z-50 -mt-[100vh] h-screen w-screen">
+      <View className="hero-scene pointer-events-none sticky top-0 z-50 -mt-[100vh] h-screen w-screen opacity-60">
         <Scene />
         <Bubbles speed={2} />
       </View>
 
-      <div className="grid">
-        <div className="grid h-screen place-content-center">
+      <div className="relative z-10 grid">
+        <div className="grid min-h-screen place-content-center pt-20">
           <div className="grid auto-rows-min place-items-center text-center">
-            <h1 className="hero-header text-5xl font-black uppercase leading-[.8] text-white sm:text-7xl md:text-[9rem] lg:text-[13rem]">
-              <span className="hero-header-word block">REBELIVE</span>
+            <h1 className="hero-header perspective-1000 flex flex-wrap justify-center overflow-hidden">
+              {"REBELIVE".split("").map((char, i) => (
+                <span key={i} className="hero-char inline-block text-6xl font-black uppercase leading-[.8] text-white sm:text-8xl md:text-[12rem] lg:text-[15rem] italic tracking-tighter">
+                  {char}
+                </span>
+              ))}
             </h1>
 
-            <div className="hero-subheading mt-8 text-3xl font-semibold text-slate-300 sm:text-5xl lg:text-6xl text-balance">
-              Redefining Energy with Science-Backed Wellness.
+            <div className="hero-subheading mt-12 px-6 text-xl font-bold text-slate-200 sm:text-4xl lg:text-5xl text-balance max-w-4xl tracking-tight">
+              REDEFINING <span className="text-orange-500">ENERGY</span> WITH SCIENCE-BACKED WELLNESS.
             </div>
 
-            <div className="hero-body mt-4 text-lg font-normal text-slate-400 max-w-2xl sm:text-2xl">
-              Empowering stressed students and professionals to enhance performance and productivity.
+            <div className="hero-body mt-6 px-6 text-base font-medium text-slate-400 max-w-2xl sm:text-xl lg:text-2xl leading-relaxed">
+              Empowering high-performers to transcend cognitive boundaries and optimize physical output.
             </div>
 
-            <div className="flex flex-col sm:flex-row justify-center gap-4 mt-10">
+            <div className="flex flex-col sm:flex-row justify-center gap-6 mt-12 w-full max-w-md sm:max-w-none px-6">
               <button
                 onClick={(e) => {
                   const image = "/labels/apex-black.png";
@@ -149,27 +150,41 @@ const Hero = ({ slice }: HeroProps): JSX.Element => {
                   toggleCart();
                   useCart.getState().triggerAnimation(image, e.clientX, e.clientY);
                 }}
-                className="hero-button w-full sm:w-auto inline-block rounded-xl bg-white px-8 py-4 text-center text-lg font-bold uppercase tracking-wide text-black transition-colors duration-150 hover:bg-orange-500 hover:text-white md:text-2xl shadow-xl shadow-white/10"
+                className="hero-button relative group overflow-hidden rounded-2xl bg-white px-10 py-5 text-center text-xl font-black uppercase tracking-wider text-black transition-all hover:scale-105 active:scale-95 shadow-[0_20px_50px_rgba(255,255,255,0.1)]"
               >
-                Buy Now — ₹125
+                <span className="relative z-10">Deploy_Apex — ₹125</span>
+                <div className="absolute inset-0 bg-orange-500 translate-y-full group-hover:translate-y-0 transition-transform duration-500" />
+                <span className="absolute inset-0 flex items-center justify-center text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none font-black italic">
+                  INITIALIZING...
+                </span>
               </button>
+
               <a
                 href="#menu"
-                className="hero-button w-full sm:w-auto inline-block rounded-xl border-2 border-white/20 px-8 py-4 text-center text-lg font-bold uppercase tracking-wide text-white transition-all duration-150 hover:bg-white/10 md:text-2xl"
+                className="hero-button group rounded-2xl border-2 border-white/10 px-10 py-5 text-center text-xl font-black uppercase tracking-wider text-white transition-all hover:bg-white/5 hover:border-white/30 backdrop-blur-sm"
               >
-                View Collection
+                Access_Archive
               </a>
             </div>
           </div>
         </div>
-        <div className="text-side relative z-[80] grid h-screen items-center gap-4 md:grid-cols-2">
-          <div>
-            <h2 className="text-side-heading text-balance text-4xl font-black uppercase text-white sm:text-6xl lg:text-8xl">
-              Modern Wellness
-            </h2>
-            <div className="text-side-body mt-4 max-w-xl text-balance text-lg font-normal text-slate-300 sm:text-xl">
-              Oxytrium Dynamics is leading the market with innovative, everyday functional foods and beverages. Lead the movement.
+
+        <div className="text-side relative z-[80] grid min-h-[70vh] items-center gap-12 md:grid-cols-2 py-32 px-6">
+          <div className="space-y-6">
+            <div className="flex items-center gap-3">
+              <div className="h-[2px] w-12 bg-orange-500" />
+              <span className="text-xs font-mono uppercase tracking-[0.5em] text-orange-500 font-bold">Protocol_4.2</span>
             </div>
+            <h2 className="text-side-heading text-balance text-5xl font-black uppercase text-white sm:text-7xl lg:text-9xl tracking-tighter italic">
+              MODERN <br /> WELLNESS
+            </h2>
+            <div className="text-side-body max-w-xl text-balance text-lg font-medium text-slate-400 sm:text-xl leading-relaxed">
+              Oxytrium Dynamics is architecting the future of human optimization. Bio-engineered functional nutrition for those who refuse to settle.
+            </div>
+          </div>
+
+          <div className="hidden md:flex justify-end">
+            <div className="h-64 w-[1px] bg-gradient-to-b from-transparent via-white/10 to-transparent" />
           </div>
         </div>
       </div>

@@ -24,6 +24,7 @@ type SkyDiveProps = {
 };
 
 export default function Scene({ sentence, flavor }: SkyDiveProps) {
+  const isDesktop = useMediaQuery("(min-width: 768px)", true);
   const groupRef = useRef<THREE.Group>(null);
   const canRef = useRef<THREE.Group>(null);
   const cloud1Ref = useRef<THREE.Group>(null);
@@ -48,21 +49,24 @@ export default function Scene({ sentence, flavor }: SkyDiveProps) {
       !canRef.current ||
       !wordsRef.current ||
       !cloud1Ref.current ||
-      !cloud2Ref.current
+      !cloud2Ref.current ||
+      !groupRef.current
     )
       return;
+
+    gsap.set(groupRef.current.scale, { x: 0, y: 0, z: 0 });
 
     /* set initial positions -- */
 
     gsap.set(cloudsRef.current.position, { z: 10 });
     gsap.set(canRef.current.position, {
-      ...getXYPosition(-4),
+      ...getXYPosition(isDesktop ? -4 : -2),
     });
 
     gsap.set(
       wordsRef.current.children.map((word) => word.position),
       {
-        ...getXYPosition(7),
+        ...getXYPosition(isDesktop ? 10 : 6),
         z: 2,
       },
     );
@@ -120,6 +124,8 @@ export default function Scene({ sentence, flavor }: SkyDiveProps) {
         overwrite: "auto",
         duration: "0.1",
       })
+      .to(groupRef.current.scale, { x: 1, y: 1, z: 1, duration: 0.3 }, 0)
+      .set(wordsRef.current.children, { fillOpacity: 1 }, 0)
       .to(cloudsRef.current.position, { z: 0, duration: 0.3 }, 0)
       .to(canRef.current.position, {
         x: 0,
@@ -132,21 +138,29 @@ export default function Scene({ sentence, flavor }: SkyDiveProps) {
         {
           keyframes: [
             { x: 0, y: 0, z: -1 },
-            { ...getXYPosition(-7), z: -7 },
+            { ...getXYPosition(isDesktop ? -20 : -15), z: -20 },
           ],
           stagger: 0.3,
         },
         0,
       )
+      .to(
+        wordsRef.current.children,
+        {
+          fillOpacity: 0,
+          duration: 0.3,
+        },
+        ">-=0.5"
+      )
       .to(canRef.current.position, {
-        ...getXYPosition(4),
+        ...getXYPosition(isDesktop ? 4 : 2),
         duration: 0.5,
         ease: "back.in(1.7)",
       })
       .to(cloudsRef.current.position, {
         z: 7, duration: .5
       });
-  });
+  }, { dependencies: [isDesktop] });
 
   return (
     <group ref={groupRef}>
@@ -174,7 +188,7 @@ export default function Scene({ sentence, flavor }: SkyDiveProps) {
 
       {/* text */}
       <group ref={wordsRef}>
-        {sentence && <ThreeText sentence={sentence} color="#F97315" />}
+        {sentence && <ThreeText sentence={sentence} color="#FFFFFF" />}
       </group>
 
       {/* lights */}
@@ -193,13 +207,18 @@ function ThreeText({
 }) {
   const words = sentence.toUpperCase().split(" ");
 
-  const material = new THREE.MeshLambertMaterial();
-  const isDesktop = useMediaQuery("(min-width: 950px)", true);
+  const material = new THREE.MeshStandardMaterial({
+    color: color,
+    emissive: new THREE.Color("#F97315"),
+    emissiveIntensity: 0.5,
+    roughness: 0,
+  });
+  const isDesktop = useMediaQuery("(min-width: 768px)", true);
 
   return words.map((word: string, wordIndex: number) => (
     <Text
       key={`${wordIndex}-${word}`}
-      scale={isDesktop ? 1 : 0.5}
+      scale={isDesktop ? 1 : 0.6}
       color={color}
       material={material}
       font="/fonts/Alpino-Variable.woff"
@@ -207,6 +226,7 @@ function ThreeText({
       anchorX={"center"}
       anchorY={"middle"}
       characters="ABCDEFGHIJKLMNOPQRSTUVWXYZ!,.?'"
+      position={[0, -wordIndex * (isDesktop ? 1.2 : 0.8), 0]}
     >
       {word}
     </Text>

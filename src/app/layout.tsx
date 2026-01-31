@@ -7,6 +7,7 @@ import Header from "@/components/Header";
 import CartDrawer from "@/components/CartDrawer";
 import Toast from "@/components/Toast";
 import FlyingCanEffect from "@/components/FlyingCanEffect";
+import AuthModal from "@/components/AuthModal";
 import ViewCanvas from "@/components/ViewCanvas";
 import Footer from "@/components/Footer";
 
@@ -30,6 +31,7 @@ export default function RootLayout({
         <Header />
         <CartDrawer />
         <Toast />
+        <AuthModal />
         <FlyingCanEffect />
         <main>
           {children}

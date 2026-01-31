@@ -14,16 +14,16 @@ const BigText = ({ slice }: BigTextProps): JSX.Element => {
     <section
       data-slice-type={slice.slice_type}
       data-slice-variation={slice.variation}
-      className="min-h-screen w-screen overflow-hidden bg-black text-white"
+      className="py-16 md:min-h-screen w-screen overflow-hidden bg-black text-white"
     >
-      <h2 className="grid w-full gap-[3vw] py-10 text-center font-black uppercase leading-[.8]">
-        <div className="text-[34vw]">APEX</div>
-        <div className="grid gap-[3vw] text-[34vw] md:flex md:text-[11vw] justify-center">
+      <h2 className="grid w-full gap-[3vw] py-4 md:py-10 text-center font-black uppercase leading-[.8]">
+        <div className="text-[22vw]">APEX</div>
+        <div className="grid gap-[2vw] text-[15vw] md:flex md:text-[11vw] justify-center">
           <span className="inline-block">ENERGY</span>
-          <span className="inline-block max-md:text-[27vw]">FOR</span>
-          <span className="inline-block max-md:text-[40vw]">THE</span>
+          <span className="inline-block max-md:text-[12vw]">FOR</span>
+          <span className="inline-block max-md:text-[15vw]">THE</span>
         </div>
-        <div className="text-[32vw]">BOLD</div>
+        <div className="text-[20vw]">BOLD</div>
       </h2>
     </section>
   );
